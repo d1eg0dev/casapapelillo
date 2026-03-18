@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Casa Papelillo — Cliffside Villa · Costa Careyes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--o:#F97316;--od:#C2550D;--ol:#FBBF8A;--cr:#FAF6EF;--sa:#EDE3D2;--sm:#D4C5A9;--st:#8C7B65;--dk:#1C1510;--dm:#3A2E22;--wh:#FFFDF9;--sf:'Cormorant Garamond',serif;--ss:'Jost',sans-serif}
+html{scroll-behavior:smooth}
+body{font-family:var(--sf);background:var(--dk);color:var(--dk);overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1.5rem 4rem;display:flex;align-items:center;justify-content:space-between;transition:all .4s}
+nav.s{background:rgba(250,246,239,.97);backdrop-filter:blur(16px);padding:.85rem 4rem;border-bottom:1px solid var(--sm)}
+.nl img{height:42px;width:auto;transition:height .3s}
+nav.s .nl img{height:32px}
+.nm{display:flex;gap:2rem;list-style:none}
+.nm a{font-family:var(--ss);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.82);text-decoration:none;transition:color .2s}
+nav.s .nm a{color:var(--dm)}
+.nm a:hover{color:var(--o)}
+.nc{font-family:var(--ss);font-size:.67rem;letter-spacing:.14em;text-transform:uppercase;color:var(--wh);border:1px solid rgba(255,255,255,.38);padding:.55rem 1.4rem;text-decoration:none;transition:all .3s;cursor:pointer;background:transparent;white-space:nowrap}
+nav.s .nc{color:var(--dk);border-color:rgba(28,21,16,.35)}
+.nc:hover{background:var(--o);border-color:var(--o);color:var(--wh)}
+@media(max-width:768px){nav,nav.s{padding:.85rem 1.2rem}.nm{display:none}}
+
+.hero{height:100svh;min-height:580px;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:0 4rem 5rem;overflow:hidden}
+.hbg{position:absolute;inset:0;background:linear-gradient(160deg,rgba(28,21,16,.52) 0%,rgba(28,21,16,.1) 52%,rgba(28,21,16,.05) 100%),linear-gradient(to top,rgba(28,21,16,.78) 0%,transparent 48%),url('img/hero.jpg') center/cover no-repeat;transform:scale(1.03);animation:zoom 14s ease-out forwards}
+@keyframes zoom{from{transform:scale(1.03)}to{transform:scale(1)}}
+.hsl{position:absolute;top:46%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:2;width:90%;opacity:0;animation:fu .9s .3s forwards}
+.hsl .dash{width:36px;height:1px;background:var(--o);margin:.85rem auto}
+.hc{position:relative;z-index:2;max-width:700px}
+.hey{font-family:var(--ss);font-size:.64rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ol);display:flex;align-items:center;gap:.8rem;margin-bottom:1.1rem;opacity:0;animation:fu .8s .6s forwards}
+.hey::before{content:'';width:28px;height:1px;background:var(--o)}
+.hero h1{font-family:var(--sf);font-size:clamp(2.6rem,5.8vw,5.2rem);font-weight:300;line-height:1.05;color:var(--wh);margin-bottom:1.6rem;opacity:0;animation:fu .9s .8s forwards}
+.hero h1 em{font-style:italic;color:var(--ol);display:block}
+.ha{display:flex;gap:1.1rem;align-items:center;flex-wrap:wrap;opacity:0;animation:fu .9s 1s forwards}
+.bp{font-family:var(--ss);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;background:var(--o);color:var(--wh);padding:.95rem 2.4rem;text-decoration:none;transition:all .3s;display:inline-block;border:none;cursor:pointer;line-height:1}
+.bp:hover{background:var(--od);transform:translateY(-2px)}
+.hscr{position:absolute;bottom:1.8rem;right:4rem;z-index:2;display:flex;flex-direction:column;align-items:center;gap:.45rem;opacity:0;animation:fu 1s 1.3s forwards}
+.sb{width:1px;height:42px;background:rgba(255,255,255,.18);position:relative;overflow:hidden}
+.sb::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--o);animation:dr 1.8s 1.5s ease-in-out infinite}
+.sbt{font-family:var(--ss);font-size:.56rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4);writing-mode:vertical-rl}
+@keyframes dr{0%{top:-100%}100%{top:100%}}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:768px){.hero{padding:0 1.2rem 3rem}.hscr{display:none}}
+
+.mq{background:var(--o);overflow:hidden}
+.mq-t{display:flex;white-space:nowrap;animation:mqa 22s linear infinite;padding:.82rem 0}
+.mq-t span{font-family:var(--sf);font-size:.92rem;font-style:italic;font-weight:300;color:rgba(255,255,255,.88);padding:0 1.8rem;display:flex;align-items:center;gap:1.8rem}
+.mq-t span::before{content:'·';font-style:normal;color:rgba(255,255,255,.45);font-size:1.2rem}
+@keyframes mqa{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.lb{font-family:var(--ss);font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:var(--o);display:flex;align-items:center;gap:.75rem;margin-bottom:.85rem}
+.lb::before{content:'';width:24px;height:1px;background:var(--o)}
+.lbl{color:var(--ol)}.lbl::before{background:var(--ol)}
+h2.td{font-family:var(--sf);font-size:clamp(1.8rem,3.2vw,2.85rem);font-weight:300;line-height:1.15;color:var(--dk)}
+h2.td em{font-style:italic;color:var(--o)}
+h2.tl{font-family:var(--sf);font-size:clamp(1.8rem,3.2vw,2.85rem);font-weight:300;line-height:1.15;color:var(--sa)}
+h2.tl em{font-style:italic;color:var(--ol)}
+
+.abt{background:var(--cr);padding:6.5rem 4rem}
+.abt-in{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5.5rem;align-items:center}
+.ai{position:relative;height:560px}
+.ai-m{position:absolute;top:0;left:0;width:76%;height:79%;background:url('img/aerial1.jpg') center/cover}
+.ai-a{position:absolute;bottom:0;right:0;width:51%;height:45%;background:url('img/aerial2.jpg') center/cover;border:5px solid var(--cr)}
+.ai-b{position:absolute;top:52%;left:55%;background:var(--o);color:var(--wh);width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;border:4px solid var(--cr);z-index:3;text-align:center}
+.ai-b .n{font-family:var(--sf);font-size:1.85rem;font-weight:300;line-height:1}
+.ai-b .l{font-family:var(--ss);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;margin-top:3px;opacity:.82}
+.at p{font-family:var(--sf);font-size:1.02rem;font-weight:300;line-height:1.9;color:var(--dm);margin-bottom:1rem}
+.agr{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--sm);margin-top:1.8rem;border:1px solid var(--sm)}
+.ag{background:var(--wh);padding:1rem 1.2rem}
+.ag .al{font-family:var(--ss);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--st);display:block;margin-bottom:2px}
+.ag .av{font-family:var(--sf);font-size:.94rem;color:var(--dk)}
+.brochure-btn{display:inline-flex;align-items:center;gap:.7rem;margin-top:1.8rem;font-family:var(--ss);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dk);border:1px solid var(--sm);padding:.85rem 1.6rem;text-decoration:none;transition:all .3s;line-height:1}
+.brochure-btn:hover{background:var(--dk);color:var(--wh);border-color:var(--dk)}
+.brochure-btn svg{width:15px;height:15px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.5}
+@media(max-width:900px){.abt{padding:3.5rem 1.2rem}.abt-in{grid-template-columns:1fr;gap:2rem}.ai{height:320px}}
+
+.ar{background:var(--dk);padding:6.5rem 4rem}
+.ar-in{max-width:1300px;margin:0 auto}
+.ar-hd{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;gap:2rem;flex-wrap:wrap}
+.ar-sb{font-family:var(--sf);font-size:.97rem;font-weight:300;color:rgba(232,220,200,.5);max-width:300px;line-height:1.8}
+.ar-gr{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.ac{position:relative;overflow:hidden;cursor:pointer}
+.ac.w{grid-column:span 2}
+.ac-img{width:100%;display:block;object-fit:cover;transition:transform .6s ease}
+.ac .ac-img{height:340px}
+.ac.w .ac-img{height:460px}
+.ac:hover .ac-img{transform:scale(1.05)}
+.ac-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,rgba(28,21,16,.86) 0%,transparent 52%);padding:1.4rem 1.7rem}
+.ac-cap span{font-family:var(--ss);font-size:.6rem;letter-spacing:.13em;text-transform:uppercase;color:var(--ol);display:block;margin-bottom:.28rem}
+.ac-cap p{font-family:var(--sf);font-size:1.2rem;font-weight:300;color:var(--wh)}
+@media(max-width:900px){.ar{padding:3.5rem 1.2rem}.ar-gr{grid-template-columns:1fr}.ac.w{grid-column:span 1}}
+
+.su{background:var(--cr);padding:6.5rem 4rem}
+.su-in{max-width:1300px;margin:0 auto}
+.su-tp{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:end;margin-bottom:3rem}
+.su-intro{font-family:var(--sf);font-size:1.02rem;font-weight:300;color:var(--dm);line-height:1.9}
+.su-gr{display:grid;grid-template-columns:repeat(3,1fr);gap:3px}
+.sc{position:relative;overflow:hidden;cursor:pointer}
+.sc.w{grid-column:span 2}
+.si{width:100%;display:block;object-fit:cover;transition:transform .6s ease}
+.sc .si{height:360px}
+.sc.w .si{height:480px}
+.sc:hover .si{transform:scale(1.05)}
+.so{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,21,16,.9) 0%,transparent 50%);display:flex;flex-direction:column;justify-content:flex-end;padding:1.8rem 1.8rem 2rem}
+.stg{font-family:var(--ss);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:var(--ol);margin-bottom:.3rem}
+.sn{font-family:var(--sf);font-size:1.32rem;font-weight:300;color:var(--wh);margin-bottom:.38rem}
+.sm2{font-family:var(--ss);font-size:.65rem;color:rgba(232,220,200,.58);letter-spacing:.04em;margin-bottom:.85rem;line-height:1.55}
+.slk{font-family:var(--ss);font-size:.61rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dk);background:var(--o);padding:.42rem 1rem;text-decoration:none;display:inline-block;transition:background .2s;width:fit-content;border:none;cursor:pointer;line-height:1}
+.slk:hover{background:var(--od)}
+.ast{background:var(--dk);padding:2.5rem 4rem;border-top:1px solid rgba(255,255,255,.05)}
+.ast-in{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem;text-align:center}
+.ami{display:flex;flex-direction:column;align-items:center;gap:.45rem}
+.aic{width:40px;height:40px;border-radius:50%;border:1px solid rgba(249,115,22,.28);display:flex;align-items:center;justify-content:center}
+.aic svg{width:16px;height:16px;fill:none;stroke:var(--o);stroke-width:1.4}
+.aml{font-family:var(--ss);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(232,220,200,.45)}
+@media(max-width:900px){.su{padding:3.5rem 1.2rem}.su-tp{grid-template-columns:1fr;gap:1.2rem}.su-gr{grid-template-columns:1fr}.sc.w{grid-column:span 1}.ast{padding:2rem 1.2rem}.ast-in{grid-template-columns:repeat(2,1fr)}}
+
+.gal{background:var(--dk);padding:6.5rem 4rem}
+.gal-in{max-width:1300px;margin:0 auto}
+.gal-hdr{text-align:center;margin-bottom:2.8rem}
+.gal-hdr .lbl{justify-content:center}
+.gg{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:230px 190px 250px;gap:3px;margin-bottom:2.2rem}
+.gi{overflow:hidden;cursor:pointer}
+.gi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.gi:hover img{transform:scale(1.07)}
+.g1{grid-column:span 5;grid-row:span 2}.g2{grid-column:span 4}.g3{grid-column:span 3}
+.g4{grid-column:span 3}.g5{grid-column:span 4}.g6{grid-column:span 5}.g7{grid-column:span 4}.g8{grid-column:span 3}
+.gf{text-align:center}
+@media(max-width:900px){.gal{padding:3.5rem 1.2rem}.gg{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:3px}.gi{grid-column:span 1 !important;grid-row:span 1 !important}.gi img{height:180px}}
+
+.gs{display:grid;grid-template-columns:1fr 1fr}
+.gs-img{min-height:500px;background:url('img/palapa_int.jpg') center/cover}
+.gs-tx{background:var(--dm);padding:5rem 4.2rem;display:flex;flex-direction:column;justify-content:center}
+.gs-tx p{font-family:var(--sf);font-size:1rem;font-weight:300;color:rgba(232,220,200,.68);line-height:1.9;margin-top:1.2rem}
+.mb2{margin-top:1.8rem;padding:1.3rem;border:1px solid rgba(249,115,22,.22)}
+.mlb{font-family:var(--ss);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ol);display:block;margin-bottom:.35rem}
+.md{font-family:var(--sf);font-size:.85rem;font-weight:300;color:rgba(232,220,200,.58);line-height:1.7}
+.mp{font-family:var(--sf);font-size:1rem;color:var(--sa);margin-top:.45rem}
+@media(max-width:900px){.gs{grid-template-columns:1fr}.gs-img{min-height:260px}.gs-tx{padding:3rem 1.2rem}}
+
+.rt{background:var(--cr);padding:6.5rem 4rem}
+.rt-in{max-width:1300px;margin:0 auto}
+.rt-hd{text-align:center;margin-bottom:3.5rem}
+.rt-hd p{font-family:var(--sf);font-size:.98rem;font-weight:300;color:var(--st);max-width:480px;margin:.7rem auto 0;line-height:1.8}
+.rg{display:grid;grid-template-columns:1fr 1fr;gap:3px;background:var(--sm)}
+.rc{background:var(--wh);padding:2.6rem 2.8rem}
+.rc.dk{background:var(--dk)}
+.rs{font-family:var(--ss);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--o);display:block;margin-bottom:.85rem}
+.rc.dk .rs{color:var(--ol)}
+.rp{font-family:var(--sf);font-size:3rem;font-weight:300;color:var(--dk);line-height:1;display:flex;align-items:flex-start;gap:.22rem}
+.rc.dk .rp{color:var(--wh)}
+.rp sup{font-size:1.2rem;margin-top:.35rem;color:var(--o)}
+.rp sub{font-size:.85rem;align-self:flex-end;margin-bottom:.28rem;color:var(--st)}
+.rc.dk .rp sub{color:var(--sm)}
+.rr{margin-top:1.3rem}
+.rrow{display:flex;justify-content:space-between;padding:.7rem 0;border-bottom:1px solid var(--sa);font-family:var(--ss);font-size:.7rem;color:var(--st)}
+.rc.dk .rrow{border-color:rgba(255,255,255,.06);color:rgba(232,220,200,.45)}
+.rrow strong{font-weight:500;color:var(--dk)}
+.rc.dk .rrow strong{color:var(--sa)}
+.rn{margin-top:2rem;padding:1.6rem;background:var(--sa);font-family:var(--ss);font-size:.68rem;color:var(--st);line-height:1.8}
+.rn strong{color:var(--dk);font-weight:500}
+@media(max-width:900px){.rt{padding:3.5rem 1.2rem}.rg{grid-template-columns:1fr}.rc{padding:2rem 1.2rem}}
+
+.lo{display:grid;grid-template-columns:1fr 1fr}
+.lo-img{min-height:500px;background:url('img/coast.jpg') center/cover;position:relative}
+.lo-img::before{content:'';position:absolute;inset:0;background:rgba(28,21,16,.32)}
+.lo-tx{background:var(--dk);padding:5rem 4.2rem;display:flex;flex-direction:column;justify-content:center}
+.lo-tx p{font-family:var(--sf);font-size:.98rem;font-weight:300;color:rgba(232,220,200,.62);line-height:1.9;margin-bottom:1.6rem}
+.rts{display:flex;flex-direction:column}
+.rt2{display:flex;justify-content:space-between;align-items:center;padding:.8rem 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.rf{font-family:var(--ss);font-size:.68rem;color:rgba(232,220,200,.55)}
+.rtt{font-family:var(--sf);font-size:.98rem;font-weight:300;color:var(--ol)}
+@media(max-width:900px){.lo{grid-template-columns:1fr}.lo-img{min-height:250px}.lo-tx{padding:3rem 1.2rem}}
+
+.ct{position:relative;padding:7rem 4rem;text-align:center;overflow:hidden}
+.ct-bg{position:absolute;inset:0;background:url('img/logo.png') center/40% no-repeat,var(--dk)}
+.ct-bg::after{content:'';position:absolute;inset:0;background:rgba(28,21,16,.84)}
+.ct-in{position:relative;z-index:2}
+.ct .lb{justify-content:center;color:rgba(232,220,200,.4)}.ct .lb::before{background:rgba(232,220,200,.28)}
+.ct h2{font-family:var(--sf);font-size:clamp(2rem,4.2vw,3.8rem);font-weight:300;color:var(--wh);margin-bottom:.85rem;line-height:1.1}
+.ct h2 em{font-style:italic;color:var(--ol)}
+.ct-sub{font-family:var(--sf);font-size:1.05rem;font-weight:300;color:rgba(232,220,200,.6);max-width:540px;margin:0 auto 1rem;line-height:1.8}
+.ct-loc{font-family:var(--ss);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--o);margin-bottom:2.5rem}
+.cc{display:flex;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.ci{font-family:var(--ss);font-size:.75rem;letter-spacing:.05em;color:rgba(232,220,200,.65);display:flex;align-items:center;gap:.55rem}
+.ci strong{color:var(--wh);font-weight:500}
+.ct-btns{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;align-items:center}
+.btn-outline-lt{font-family:var(--ss);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.3);padding:.95rem 2rem;text-decoration:none;transition:all .3s;display:inline-flex;align-items:center;gap:.6rem;line-height:1}
+.btn-outline-lt:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.6)}
+.btn-outline-lt svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.5;flex-shrink:0}
+@media(max-width:768px){.ct{padding:4rem 1.2rem}.cc{gap:1rem}.ct-btns{flex-direction:column;align-items:stretch}.ct-btns .bp,.ct-btns .btn-outline-lt{text-align:center;justify-content:center}}
+
+.modal-overlay{position:fixed;inset:0;background:rgba(28,21,16,.88);z-index:999;display:none;align-items:center;justify-content:center;padding:1.5rem;backdrop-filter:blur(8px)}
+.modal-overlay.open{display:flex}
+.modal{background:var(--cr);width:100%;max-width:520px;padding:2.8rem;position:relative;animation:mfade .3s ease;max-height:90svh;overflow-y:auto}
+@keyframes mfade{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.modal-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;cursor:pointer;font-family:var(--ss);font-size:.65rem;letter-spacing:.1em;color:var(--st);text-transform:uppercase;padding:.3rem .5rem}
+.modal-close:hover{color:var(--dk)}
+.modal h3{font-family:var(--sf);font-size:1.75rem;font-weight:300;color:var(--dk);margin-bottom:.35rem;line-height:1.2}
+.modal h3 em{font-style:italic;color:var(--o)}
+.modal-sub{font-family:var(--sf);font-size:.9rem;font-weight:300;color:var(--st);margin-bottom:1.8rem;line-height:1.6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+.form-field{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem}
+.form-field label{font-family:var(--ss);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--st)}
+.form-field input{font-family:var(--sf);font-size:1rem;font-weight:300;color:var(--dk);background:var(--wh);border:1px solid var(--sm);padding:.7rem .9rem;outline:none;transition:border .2s;width:100%;-webkit-appearance:none;border-radius:0}
+.form-field input:focus{border-color:var(--o)}
+.form-field input::placeholder{color:var(--sm)}
+.form-submit{width:100%;font-family:var(--ss);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;background:var(--o);color:var(--wh);border:none;padding:1rem;cursor:pointer;transition:background .3s;margin-top:.4rem;line-height:1;display:block}
+.form-submit:hover{background:var(--od)}
+.form-note{font-family:var(--ss);font-size:.58rem;color:var(--st);text-align:center;margin-top:.75rem;line-height:1.6}
+.form-success{display:none;text-align:center;padding:1.5rem 0}
+.form-success h4{font-family:var(--sf);font-size:1.5rem;font-weight:300;color:var(--dk);margin-bottom:.5rem;line-height:1.2}
+.form-success h4 em{font-style:italic;color:var(--o)}
+.form-success p{font-family:var(--sf);font-size:.95rem;font-weight:300;color:var(--st);line-height:1.7}
+@media(max-width:600px){.form-row{grid-template-columns:1fr}.modal{padding:2rem 1.2rem}}
+
+footer{background:var(--dk);padding:4.5rem 4rem 2.2rem}
+.fi{max-width:1300px;margin:0 auto}
+.ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3.5rem;margin-bottom:3rem}
+.fl img{height:44px;width:auto;margin-bottom:1rem;display:block}
+.ftg{font-family:var(--sf);font-style:italic;font-size:.92rem;color:rgba(232,220,200,.4);line-height:1.7;margin-bottom:1.2rem;max-width:250px}
+.fc2 p{font-family:var(--ss);font-size:.7rem;color:rgba(232,220,200,.4);margin-bottom:.32rem;letter-spacing:.04em}
+.fc2 a{color:var(--ol);text-decoration:none}
+.fco h5{font-family:var(--ss);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:var(--o);margin-bottom:1rem}
+.fco ul{list-style:none}
+.fco ul li{margin-bottom:.5rem}
+.fco ul li a{font-family:var(--sf);font-size:.88rem;font-weight:300;color:rgba(232,220,200,.4);text-decoration:none;transition:color .2s}
+.fco ul li a:hover{color:var(--sa)}
+.fbot{border-top:1px solid rgba(255,255,255,.06);padding-top:1.6rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem}
+.fbot p{font-family:var(--ss);font-size:.6rem;letter-spacing:.06em;color:rgba(232,220,200,.25)}
+.fbot a{color:rgba(232,220,200,.4);text-decoration:none;transition:color .2s}
+.fbot a:hover{color:var(--ol)}
+@media(max-width:900px){footer{padding:3rem 1.2rem 1.8rem}.ftop{grid-template-columns:1fr 1fr;gap:1.8rem}}
+</style>
+</head>
+<body>
+
+<div class="modal-overlay" id="inquiryModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">Close ×</button>
+    <h3>Reserve <em>Casa Papelillo</em></h3>
+    <p class="modal-sub">Tell us about your stay and we will get back to you within 24 hours.</p>
+    <div id="inquiryForm">
+      <div class="form-row">
+        <div class="form-field"><label>Full name</label><input type="text" id="f-name" placeholder="Your name"></div>
+        <div class="form-field"><label>Phone / WhatsApp</label><input type="tel" id="f-phone" placeholder="+1 234 567 8900"></div>
+      </div>
+      <div class="form-field"><label>Email address</label><input type="email" id="f-email" placeholder="you@email.com"></div>
+      <div class="form-row">
+        <div class="form-field"><label>Date of arrival</label><input type="date" id="f-arrival"></div>
+        <div class="form-field"><label>Date of departure</label><input type="date" id="f-departure"></div>
+      </div>
+      <button class="form-submit" onclick="submitForm()">Send Inquiry</button>
+      <p class="form-note">We will reply via WhatsApp or email · +1 (917) 363 7913</p>
+    </div>
+    <div class="form-success" id="formSuccess">
+      <h4>Thank you for your <em>inquiry</em></h4>
+      <p>We have received your details and will be in touch within 24 hours to confirm availability and discuss your stay at Casa Papelillo.</p>
+    </div>
+  </div>
+</div>
+
+<nav id="nav">
+  <a href="#" class="nl"><img src="img/logo.png" alt="Casa Papelillo"></a>
+  <ul class="nm">
+    <li><a href="#about">The Villa</a></li>
+    <li><a href="#suites">Suites</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#rates">Rates</a></li>
+    <li><a href="#location">Location</a></li>
+  </ul>
+  <button class="nc" onclick="openModal()">Inquire Now</button>
+</nav>
+
+<section class="hero">
+  <div class="hbg"></div>
+  <div class="hsl"><div class="dash"></div></div>
+  <div class="hc">
+    <p class="hey">Cliffside Villa · Chamela Bay, Costa Careyes</p>
+    <h1>Between ancient roots<br><em>and caressed by the sea.</em></h1>
+    <div class="ha">
+      <button class="bp" onclick="openModal()">Reserve the Villa</button>
+      <a href="https://drive.google.com/uc?export=download&id=1aiMI0SWS-z9IhwjYvHWS-VormLVbxIbt" target="_blank" class="bp" style="background:transparent;border:1px solid rgba(255,255,255,.35);display:inline-flex;align-items:center;gap:.6rem;padding:.95rem 2rem">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 16V8M8 12l4 4 4-4"/><rect x="3" y="3" width="18" height="18" rx="1"/></svg>
+        Download Brochure
+      </a>
+    </div>
+  </div>
+  <div class="hscr"><div class="sb"></div><span class="sbt">Scroll</span></div>
+</section>
+
+<div class="mq"><div class="mq-t">
+  <span>180° Ocean Views</span><span>5 Private Suites</span><span>Up to 12 Guests</span><span>Private Staff</span><span>Infinity Pool</span><span>Full-Villa Exclusive</span><span>Chamela Bay · Costa Careyes</span><span>Jalisco, México</span>
+  <span>180° Ocean Views</span><span>5 Private Suites</span><span>Up to 12 Guests</span><span>Private Staff</span><span>Infinity Pool</span><span>Full-Villa Exclusive</span><span>Chamela Bay · Costa Careyes</span><span>Jalisco, México</span>
+</div></div>
+
+<section id="about" class="abt">
+  <div class="abt-in">
+    <div class="ai">
+      <div class="ai-m"></div>
+      <div class="ai-a"></div>
+      <div class="ai-b"><span class="n">12</span><span class="l">guests<br>max</span></div>
+    </div>
+    <div class="at">
+      <p class="lb">Welcome to Casa Papelillo</p>
+      <h2 class="td">Bold, open, organic —<br><em>deeply connected</em></h2>
+      <p style="margin-top:1.3rem">Nestled on the cliffs of Chamela Bay — within the exclusive Costa Careyes community — this villa offers uninterrupted 180-degree ocean views and an intimate connection with the raw beauty of the Pacific.</p>
+      <p>Its design merges local craftsmanship with understated elegance: hand-polished stucco walls, natural stone, and thatched palm palapas that rise like living sculptures — a space where art, nature, and time coexist.</p>
+      <div class="agr">
+        <div class="ag"><span class="al">Location</span><span class="av">Chamela Bay, Jalisco</span></div>
+        <div class="ag"><span class="al">Community</span><span class="av">Costa Careyes</span></div>
+        <div class="ag"><span class="al">Suites</span><span class="av">5 private suites</span></div>
+        <div class="ag"><span class="al">Rental</span><span class="av">Full-property exclusive</span></div>
+        <div class="ag"><span class="al">Pool</span><span class="av">Cliffside infinity pool</span></div>
+        <div class="ag"><span class="al">Staff</span><span class="av">Dedicated private staff</span></div>
+      </div>
+      <a href="https://drive.google.com/uc?export=download&id=1aiMI0SWS-z9IhwjYvHWS-VormLVbxIbt" target="_blank" class="brochure-btn">
+        <svg viewBox="0 0 24 24"><path d="M12 16V8M8 12l4 4 4-4"/><rect x="3" y="3" width="18" height="18" rx="1"/></svg>
+        Download Full Brochure (PDF)
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="ar">
+  <div class="ar-in">
+    <div class="ar-hd">
+      <div><p class="lb lbl">Common Areas</p><h2 class="tl">The heart of<br><em>the villa</em></h2></div>
+      <p class="ar-sb">Where ocean breezes drift through the rooms and the scent of salt and jungle fills the air.</p>
+    </div>
+    <div class="ar-gr">
+      <div class="ac w"><img class="ac-img" src="img/palapa_int.jpg" alt="Main Palapa"><div class="ac-cap"><span>Main Palapa · Open-air living</span><p>Where ocean, light, and laughter flow freely</p></div></div>
+      <div class="ac"><img class="ac-img" src="img/palapa_org.jpg" alt="Palapa Interior"><div class="ac-cap"><span>Living & Dining</span><p>Dining for twelve beneath the palapa</p></div></div>
+      <div class="ac w"><img class="ac-img" src="img/pool_torch.jpg" alt="Infinity Pool"><div class="ac-cap"><span>Infinity Pool</span><p>Dissolving into the horizon at every sunset</p></div></div>
+      <div class="ac"><img class="ac-img" src="img/terrace.jpg" alt="Sun Terrace"><div class="ac-cap"><span>Sun Terrace</span><p>Curved terraces above the Pacific cliffs</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="suites" class="su">
+  <div class="su-in">
+    <div class="su-tp">
+      <div><p class="lb">Accommodations</p><h2 class="td">Five suites named<br><em>after the sky</em></h2></div>
+      <p class="su-intro">Each suite offers its own terrace, ocean view, and private en-suite bathroom — interiors that combine Mexican artistry with contemporary comfort. A/C, fan, Bose speaker, Smart TV, minibar, safe, and yoga mat in every room.</p>
+    </div>
+    <div class="su-gr">
+      <div class="sc w"><img class="si" src="img/suite1.jpg" alt="King suite ocean view"><div class="so"><span class="stg">Upper floor · Master suite</span><p class="sn">King-size bed · Panoramic ocean terrace</p><p class="sm2">Private terrace · En-suite bathroom · Direct ocean view</p><button class="slk" onclick="openModal()">Inquire</button></div></div>
+      <div class="sc"><img class="si" src="img/suite2.jpg" alt="King suite interior"><div class="so"><span class="stg">Main floor · King suite</span><p class="sn">King-size bed · Private balcony</p><p class="sm2">Ocean view · Accessibility features · En-suite bathroom</p><button class="slk" onclick="openModal()">Inquire</button></div></div>
+      <div class="sc"><img class="si" src="img/suite3.jpg" alt="Double suite"><div class="so"><span class="stg">Main floor · Junior suite</span><p class="sn">Two queen beds · Garden terrace</p><p class="sm2">Ocean view · En-suite bathroom · Ideal for families</p><button class="slk" onclick="openModal()">Inquire</button></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="ast"><div class="ast-in">
+  <div class="ami"><div class="aic"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div><span class="aml">Full Villa Exclusive</span></div>
+  <div class="ami"><div class="aic"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div><span class="aml">Up to 12 Guests</span></div>
+  <div class="ami"><div class="aic"><svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg></div><span class="aml">180° Ocean Views</span></div>
+  <div class="ami"><div class="aic"><svg viewBox="0 0 24 24"><path d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"/></svg></div><span class="aml">Dedicated Staff</span></div>
+</div></div>
+
+<section id="gallery" class="gal">
+  <div class="gal-in">
+    <div class="gal-hdr"><p class="lb lbl">Gallery</p><h2 class="tl">A place to <em>remember</em></h2></div>
+    <div class="gg">
+      <div class="gi g1"><img src="img/hero.jpg" alt="Rainbow sunset"></div>
+      <div class="gi g2"><img src="img/sunset_dram.jpg" alt="Dramatic sunset"></div>
+      <div class="gi g3"><img src="img/facade.jpg" alt="Villa facade"></div>
+      <div class="gi g4"><img src="img/sunset2.jpg" alt="Pool bougainvillea"></div>
+      <div class="gi g5"><img src="img/pool_day.jpg" alt="Pool palapa day"></div>
+      <div class="gi g6"><img src="img/night.jpg" alt="Night pool lights"></div>
+      <div class="gi g7"><img src="img/aerial1.jpg" alt="Aerial villa"></div>
+      <div class="gi g8"><img src="img/aerial2.jpg" alt="Aerial rocks"></div>
+    </div>
+    <div class="gf"><button class="bp" onclick="openModal()">Reserve for your dates</button></div>
+  </div>
+</section>
+
+<section class="gs">
+  <div class="gs-img"></div>
+  <div class="gs-tx">
+    <p class="lb lbl">Gastronomy</p>
+    <h2 class="tl">A ritual of<br><em>connection</em></h2>
+    <p>Our chef curates daily menus inspired by traditional Mexican flavors and local ingredients — seafood caught that morning, tropical fruits from nearby orchards, and handmade tortillas crafted with care.</p>
+    <p>Beach dinners, rooftop barbecues, bonfire picnics — each prepared and styled with attention to detail.</p>
+    <div class="mb2"><span class="mlb">Meal Plan — Low Season</span><p class="md">Three daily meals, beverages, and snacks. Vegetarian, vegan, and special dietary menus available.</p><p class="mp">$63 USD / adult per day · $34 USD / child per day</p></div>
+  </div>
+</section>
+
+<section id="rates" class="rt">
+  <div class="rt-in">
+    <div class="rt-hd"><p class="lb" style="justify-content:center">Rates & Reservations</p><h2 class="td" style="text-align:center">Full-property exclusive<br><em>best rate guaranteed</em></h2><p>All rates apply to the entire villa. 10% service fee included. Subject to applicable taxes.</p></div>
+    <div class="rg">
+      <div class="rc dk">
+        <span class="rs">High Season</span>
+        <div class="rp"><sup>$</sup>3,300<sub>USD / night</sub></div>
+        <div class="rr">
+          <div class="rrow"><span>Minimum stay</span><strong>7 nights</strong></div>
+          <div class="rrow"><span>7-night total</span><strong>$23,100 USD</strong></div>
+          <div class="rrow"><span>Service fee</span><strong>Included (10%)</strong></div>
+          <div class="rrow"><span>Guests included</span><strong>Up to 12</strong></div>
+        </div>
+        <br><button class="bp" onclick="openModal()" style="margin-top:.8rem">Reserve High Season</button>
+      </div>
+      <div class="rc">
+        <span class="rs">Low Season</span>
+        <div class="rp"><sup>$</sup>1,897<sub>USD / night</sub></div>
+        <div class="rr">
+          <div class="rrow"><span>Minimum stay</span><strong>Flexible</strong></div>
+          <div class="rrow"><span>Service fee</span><strong>Included (10%)</strong></div>
+          <div class="rrow"><span>Meal plan</span><strong>$63 / adult / day</strong></div>
+          <div class="rrow"><span>Private transfer</span><strong>Available on request</strong></div>
+        </div>
+        <br><button class="bp" onclick="openModal()" style="margin-top:.8rem;background:var(--dk)">Reserve Low Season</button>
+      </div>
+    </div>
+    <div class="rn"><strong>Additional experiences:</strong> Beach bonfire · Movie night · Romantic setup · Picnic · Boat rental ($3,300 MXN/hr) · Event coordination. 15% gratuity recommended. Security deposit equal to one night required.</div>
+  </div>
+</section>
+
+<section id="location" class="lo">
+  <div class="lo-img"></div>
+  <div class="lo-tx">
+    <p class="lb lbl">How to Get Here</p>
+    <h2 class="tl">Chamela Bay,<br><em>Jalisco, México</em></h2>
+    <p>On the cliffs of Chamela Bay — just before reaching the iconic Careyes community. Pristine beaches, emerald jungle, and world-class privacy, with the cultural energy of Careyes minutes away.</p>
+    <div class="rts">
+      <div class="rt2"><span class="rf">Chamela landing strip (Private)</span><span class="rtt">~16 min</span></div>
+      <div class="rt2"><span class="rf">Manzanillo Airport</span><span class="rtt">~1 hr 40 min</span></div>
+      <div class="rt2"><span class="rf">Puerto Vallarta Airport</span><span class="rtt">~2 hr 30 min</span></div>
+    </div>
+    <p style="font-size:.82rem;margin-top:1.4rem;color:rgba(232,220,200,.35)">Private ground transportation coordinated upon request.</p>
+  </div>
+</section>
+
+<section id="booking" class="ct">
+  <div class="ct-bg"></div>
+  <div class="ct-in">
+    <p class="lb">Direct Booking · Best Rate Guaranteed</p>
+    <h2>Your story begins<br><em>on the cliffs of Chamela</em></h2>
+    <p class="ct-sub">Just minutes from the legendary Costa Careyes community — the art, the polo, the sunsets — Casa Papelillo sits on Chamela Bay, where the Pacific meets the jungle and time slows to its own rhythm.</p>
+    <p class="ct-loc">Chamela Bay · Costa Careyes · Jalisco, México</p>
+    <div class="cc">
+      <span class="ci">Phone / WhatsApp: <strong>+1 (917) 363 7913</strong></span>
+      <span class="ci">Instagram: <strong>@casapapelillo</strong></span>
+    </div>
+    <div class="ct-btns">
+      <button class="bp" onclick="openModal()">Send an Inquiry</button>
+      <a href="https://drive.google.com/uc?export=download&id=1aiMI0SWS-z9IhwjYvHWS-VormLVbxIbt" target="_blank" class="btn-outline-lt">
+        <svg viewBox="0 0 24 24"><path d="M12 16V8M8 12l4 4 4-4"/><rect x="3" y="3" width="18" height="18" rx="1"/></svg>
+        Download Brochure
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fi">
+    <div class="ftop">
+      <div>
+        <div class="fl"><img src="img/logo.png" alt="Casa Papelillo"></div>
+        <p class="ftg">"Between ancient roots and caressed by the sea."</p>
+        <div class="fc2">
+          <p>+1 (917) 363 7913</p>
+          <p>Chamela Bay, Jalisco, México</p>
+          <p><a href="#">@casapapelillo</a></p>
+        </div>
+      </div>
+      <div class="fco"><h5>The Villa</h5><ul>
+        <li><a href="#about">Welcome</a></li>
+        <li><a href="#suites">Suites</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#rates">Rates</a></li>
+      </ul></div>
+      <div class="fco"><h5>Experiences</h5><ul>
+        <li><a href="#">Boat & Fishing</a></li>
+        <li><a href="#">Yoga & Meditation</a></li>
+        <li><a href="#">Sound Bath</a></li>
+        <li><a href="#">Gastronomy</a></li>
+      </ul></div>
+      <div class="fco"><h5>Information</h5><ul>
+        <li><a href="#">Location</a></li>
+        <li><a href="#">House Rules</a></li>
+        <li><a href="#">Cancellation</a></li>
+        <li><a href="https://drive.google.com/uc?export=download&id=1aiMI0SWS-z9IhwjYvHWS-VormLVbxIbt" target="_blank">Download Brochure</a></li>
+      </ul></div>
+    </div>
+    <div class="fbot">
+      <p>© 2026 Casa Papelillo. All rights reserved. · Chamela Bay, Costa Careyes, Jalisco, México</p>
+      <p>Developed by <a href="https://wdstudio.agency" target="_blank">WD Studio Agency</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('s', scrollY > 80));
+function openModal() {
+  document.getElementById('inquiryModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  const today = new Date().toISOString().split('T')[0];
+  const arrival = document.getElementById('f-arrival');
+  const departure = document.getElementById('f-departure');
+  arrival.min = today;
+  departure.min = today;
+  arrival.onchange = function() { departure.min = this.value; };
+}
+function closeModal() {
+  document.getElementById('inquiryModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('inquiryModal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+function submitForm() {
+  const ids = ['f-name','f-phone','f-email','f-arrival','f-departure'];
+  if (ids.some(id => !document.getElementById(id).value.trim())) {
+    alert('Please fill in all fields before submitting.');
+    return;
+  }
+  document.getElementById('inquiryForm').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
+}
+</script>
+</body>
+</html>
