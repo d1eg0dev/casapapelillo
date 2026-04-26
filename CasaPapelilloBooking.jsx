@@ -124,7 +124,7 @@ export default function BookingWidget() {
     
     try {
       // ═══ REPLACE THIS URL WITH YOUR GOOGLE APPS SCRIPT WEB APP URL ═══
-      const APPS_SCRIPT_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+      const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxRcY80TpPHmoPDhGy9dUHqswxjncU3uB91n9UDU8SfEE6yYyWtCa0UEyVO315e5vQqaQ/exec";
       
       const res = await fetch(APPS_SCRIPT_URL, {
         method: "POST",
