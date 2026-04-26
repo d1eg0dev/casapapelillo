@@ -270,7 +270,7 @@ function render(){
       else if(inSel)cls+=" selected";
       else if(high)cls+=" high";
       const dot=high&&!booked&&!past&&!inSel&&!isCi&&!isCo?`<div class="high-dot"></div>`:"";
-      const onclick=!past&&!booked?`onclick="handleDay(${date.getTime()})"`:""
+      const onclick=!past&&!booked?`onclick="handleDay(${date.getTime()})"`:"";
       daysHtml+=`<div class="${cls}" ${onclick}>${date.getDate()}${dot}</div>`;
     });
 
@@ -470,13 +470,31 @@ function resetAll(){
   render();
 }
 
-// Initial render
-render();
+/* ═══════════════════════════════════════════
+   INITIALIZATION & SAFE RESIZE OBSERVER
+   ═══════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Initial render only after the DOM is fully ready
+  render();
 
-// Report height changes to parent (for WordPress iframe auto-resize)
-new ResizeObserver(()=>{
-  window.parent.postMessage({type:"resize",height:document.body.scrollHeight},"*");
-}).observe(document.body);
+  // 2. Feature detection and safe initialization for ResizeObserver
+  if (typeof ResizeObserver !== 'undefined') {
+    try {
+      const observer = new ResizeObserver(() => {
+        window.parent.postMessage({ type: "resize", height: document.body.scrollHeight }, "*");
+      });
+      observer.observe(document.body);
+    } catch (error) {
+      console.warn("ResizeObserver initialization failed:", error);
+    }
+  } else {
+    // Fallback for older browsers or strict webviews
+    console.warn("ResizeObserver not supported in this environment. Using fallback.");
+    setTimeout(() => {
+      window.parent.postMessage({ type: "resize", height: document.body.scrollHeight }, "*");
+    }, 800);
+  }
+});
 </script>
 </body>
 </html>
