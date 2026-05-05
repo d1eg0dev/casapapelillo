@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reserve Casa Papelillo</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#fff;font-family:-apple-system,system-ui,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#1a1a2e;-webkit-font-smoothing:antialiased}
+.wrap{max-width:560px;margin:0 auto;padding:36px 24px}
+h1{font-size:30px;font-weight:300;font-family:'DM Serif Display',Georgia,serif;color:#1a1a2e;letter-spacing:-0.01em}
+h1 span{color:#E8863A;font-style:italic}
+.sub{font-size:14px;color:#666;margin-top:8px;line-height:1.55}
+.note{font-size:12px;color:#999;margin-top:4px}
+.steps{display:flex;gap:24px;margin:24px 0 20px;padding-bottom:16px;border-bottom:1px solid #eee}
+.step{display:flex;align-items:center;gap:8px;transition:opacity .3s}
+.step.dim{opacity:.35}
+.dot{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:#ccc;transition:background .3s}
+.dot.active{background:#E8863A}
+.dot.done{background:#1a1a2e}
+.step-text{font-size:13px;color:#1a1a2e;letter-spacing:.3px}
+.step-text.bold{font-weight:600}
+
+/* Calendar */
+.cal-box{background:#fafaf8;border:1px solid #eee;border-radius:6px;padding:20px;margin-bottom:16px}
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.cal-arr{background:#fff;border:1px solid #ddd;color:#888;width:34px;height:34px;border-radius:4px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center}
+.cal-arr:hover{border-color:#E8863A;color:#E8863A}
+.cal-month{font-size:14px;font-weight:600;letter-spacing:1.5px;color:#E8863A;text-transform:uppercase}
+.legend{display:flex;gap:16px;margin-bottom:10px;flex-wrap:wrap}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:#888}
+.leg-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}
+.cal-dh{text-align:center;font-size:10px;font-weight:700;color:#aaa;padding:4px 0;letter-spacing:1px;text-transform:uppercase}
+.cal-day{text-align:center;padding:10px 4px;border-radius:4px;font-size:13px;position:relative;transition:all .15s;user-select:none;cursor:pointer;border:1px solid transparent}
+.cal-day.past{opacity:.25;cursor:default}
+.cal-day.booked{background:#fde8e8;color:#c25050;cursor:default}
+.cal-day.high{background:#fdf8f3;border-color:#f0dcc8}
+.cal-day.selected{background:#fef0e5;color:#E8863A;font-weight:600;border-color:#E8863A}
+.cal-day.endpoint{background:#E8863A;color:#fff;font-weight:700;border-color:#E8863A}
+.cal-day:not(.past):not(.booked):hover{background:#fef0e5}
+.high-dot{width:4px;height:4px;border-radius:50%;background:#E8863A;margin:2px auto 0;opacity:.5}
+.cal-foot{margin-top:14px;display:flex;flex-direction:column;gap:6px}
+.season-badge{font-size:9px;font-weight:700;letter-spacing:2px;color:#E8863A;text-transform:uppercase}
+.season-badge.low{color:#999}
+.season-list{font-size:11px;color:#aaa}
+
+/* Price box */
+.price-box{background:#fafaf8;border:1px solid #eee;border-radius:6px;padding:16px;margin-bottom:16px}
+.price-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0}
+.price-k{font-size:13px;color:#888}
+.price-v{font-size:14px;font-weight:500;color:#1a1a2e}
+.price-v.total{color:#E8863A;font-size:18px;font-weight:700;font-family:'DM Serif Display',Georgia,serif}
+.season-tag{font-size:10px;color:#E8863A;font-weight:600;margin-top:4px;text-transform:uppercase;letter-spacing:1.5px}
+.hint{font-size:12px;color:#aaa;font-style:italic;margin-top:4px}
+
+/* Form */
+.field{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.label{font-size:11px;font-weight:700;color:#888;letter-spacing:.5px;text-transform:uppercase}
+input,select,textarea{background:#fafaf8;border:1px solid #ddd;border-radius:4px;padding:11px 14px;color:#1a1a2e;font-size:14px;outline:none;font-family:inherit;transition:border .2s;width:100%}
+input:focus,textarea:focus{border-color:#E8863A}
+textarea{min-height:80px;resize:vertical}
+.error{background:#fde8e8;border:1px solid #f0c0c0;color:#c25050;padding:10px 14px;border-radius:4px;font-size:13px;margin-bottom:14px}
+
+/* Experiences */
+.exp-h2{font-size:22px;font-weight:400;font-family:'DM Serif Display',Georgia,serif;color:#1a1a2e;margin:0 0 6px}
+.exp-sub{font-size:13px;color:#888;line-height:1.55;margin-bottom:16px}
+.exp-cat-title{font-size:10px;font-weight:700;letter-spacing:2.5px;color:#E8863A;margin-bottom:8px;text-transform:uppercase;margin-top:20px}
+.exp-row{border:1px solid #eee;border-radius:5px;padding:14px 16px;margin-bottom:6px;transition:all .2s;cursor:pointer}
+.exp-row.active{background:#fef6ee;border-color:#E8863A}
+.exp-check{display:flex;align-items:center;gap:12px}
+.checkbox{width:20px;height:20px;border-radius:3px;border:2px solid #ccc;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;background:#fff}
+.checkbox.on{background:#E8863A;border-color:#E8863A}
+.exp-info{flex:1}
+.exp-name{font-size:14px;font-weight:500;color:#1a1a2e}
+.exp-desc{font-size:11px;color:#999;margin-top:2px}
+.exp-price{font-size:14px;font-weight:600;color:#E8863A;white-space:nowrap}
+.qty-row{display:flex;align-items:center;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid #f0ece5}
+.qty-btn{width:28px;height:28px;border-radius:4px;border:1px solid #ddd;background:#fff;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1a1a2e}
+.qty-btn:hover{border-color:#E8863A;color:#E8863A}
+.qty-val{font-size:15px;font-weight:600;color:#1a1a2e;min-width:20px;text-align:center}
+.qty-total{margin-left:auto;font-size:13px;font-weight:600;color:#E8863A}
+.exp-total-bar{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;background:#fef6ee;border:1px solid #f0dcc8;border-radius:5px;margin:12px 0 8px}
+.exp-total-bar span:first-child{font-size:13px;color:#888}
+.exp-total-bar span:last-child{font-size:16px;font-weight:700;color:#E8863A}
+
+/* Summary */
+.sum-box{background:#fafaf8;border:1px solid #eee;border-radius:6px;padding:20px;margin-bottom:16px}
+.sum-label{font-size:10px;font-weight:700;letter-spacing:2.5px;color:#E8863A;margin-bottom:12px;text-transform:uppercase}
+.sum-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid #f0ece5}
+.sum-k{font-size:13px;color:#888}
+.sum-v{font-size:14px;font-weight:500;color:#1a1a2e}
+.sum-total{border-top:2px solid #E8863A;padding-top:12px;margin-top:8px;border-bottom:none}
+.sum-total .sum-k{color:#1a1a2e;font-weight:700;font-size:15px}
+.sum-total .sum-v{color:#E8863A;font-size:22px;font-weight:700;font-family:'DM Serif Display',Georgia,serif}
+
+/* Buttons */
+.nav-row{display:flex;align-items:center;gap:12px;margin-top:20px;padding-top:16px;border-top:1px solid #eee}
+.btn-primary{background:#E8863A;border:none;color:#fff;padding:13px 28px;border-radius:4px;font-size:15px;font-weight:700;cursor:pointer;letter-spacing:.5px;font-family:inherit;transition:background .2s,opacity .2s}
+.btn-primary:hover{background:#d4732a}
+.btn-primary.dim{opacity:.4;cursor:default}
+.btn-secondary{background:#fff;border:1px solid #ddd;color:#888;padding:11px 20px;border-radius:4px;font-size:13px;cursor:pointer;letter-spacing:.5px;font-family:inherit}
+.btn-secondary:hover{border-color:#aaa}
+.spacer{flex:1}
+
+/* Confirm */
+.confirm-icon{width:48px;height:48px;border-radius:50%;background:#E8863A;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin:0 auto 16px}
+.confirm-title{font-size:24px;font-family:'DM Serif Display',Georgia,serif;text-align:center;margin:0 0 8px;color:#1a1a2e}
+.confirm-sub{font-size:14px;color:#888;text-align:center;line-height:1.55;margin-bottom:24px}
+
+.hidden{display:none}
+
+@media(max-width:480px){
+  .wrap{padding:24px 16px}
+  .steps{gap:12px}
+  .step-text{font-size:11px}
+  .exp-check{flex-wrap:wrap}
+  .exp-price{flex:1 1 100%;margin-top:4px}
+}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"></div>
+
+<script>
+/* ═══════════════════════════════════════════
+   DATA
+   ═══════════════════════════════════════════ */
+const HIGH_SEASON=[
+  {start:"2026-01-29",end:"2026-02-12",label:"Chinese New Year"},
+  {start:"2026-03-29",end:"2026-04-05",label:"Holy & Easter Week"},
+  {start:"2026-11-05",end:"2026-11-10",label:"Ondalinda Festival"},
+  {start:"2026-12-20",end:"2027-01-05",label:"Christmas & New Year's"},
+  {start:"2027-02-05",end:"2027-02-20",label:"Chinese New Year"},
+  {start:"2027-03-21",end:"2027-03-28",label:"Holy & Easter Week"},
+  {start:"2027-11-04",end:"2027-11-09",label:"Ondalinda Festival"},
+  {start:"2027-12-20",end:"2028-01-05",label:"Christmas & New Year's"},
+];
+const BOOKED=[{start:"2026-04-15",end:"2026-04-19"}];
+const RATE_H=3600,RATE_L=1400,MIN_H=7,MIN_L=3;
+const MO=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DY=["Mo","Tu","We","Th","Fr","Sa","Su"];
+
+const EXP_CATEGORIES=[
+  {category:"Transportation",items:[
+    {id:"tr_mzt",name:"Airport Transfer — Manzanillo",desc:"Private sedan, up to 4 guests",price:150,qty:true,unit:"/vehicle"},
+    {id:"tr_pvr",name:"Airport Transfer — Puerto Vallarta",desc:"Private sedan, up to 4 guests",price:250,qty:true,unit:"/vehicle"},
+  ]},
+  {category:"Adventures",items:[
+    {id:"boat",name:"Boat Rental & Fishing",desc:"8–10 guests · min 2 hours",price:165,unit:"/hour",qty:true},
+    {id:"horse",name:"Horseback Riding",desc:"Guided beach / jungle coastal ride",price:75,unit:"/person/hour",qty:true},
+  ]},
+  {category:"Wellness",items:[
+    {id:"yoga",name:"Yoga & Guided Meditation",desc:"1–5 participants · 1hr session",price:140,qty:true},
+    {id:"yoga_extra",name:"Yoga & Guided Meditation — Additional Participant",desc:"Per extra person beyond 5",price:25,unit:"/person",qty:true,requiresParent:"yoga"},
+    {id:"sound",name:"Sound Healing / Sound Bath",desc:"1–5 participants · ~1 hour",price:220,qty:true},
+    {id:"sound_extra",name:"Sound Healing — Additional Participant",desc:"Per extra person beyond 5",price:40,unit:"/person",qty:true,requiresParent:"sound"},
+  ]},
+  {category:"Massage & Beauty",items:[
+    {id:"mass_relax",name:"Relaxing Massage",desc:"60 min · gentle pressure & aromatherapy",price:90,qty:true},
+    {id:"mass_deep",name:"Deep Tissue Massage",desc:"90 min · focused techniques & stretching",price:125,qty:true},
+    {id:"mani_pedi",name:"Manicure + Pedicure",desc:"Full nail care treatment",price:180,qty:true},
+    {id:"mani_or_pedi",name:"Manicure or Pedicure",desc:"Single treatment",price:90,qty:true},
+    {id:"makeup",name:"Makeup + Hairstyling",desc:"Per person",price:210,unit:"/person",qty:true},
+  ]},
+];
+
+// ═══ REPLACE THIS WITH YOUR GOOGLE APPS SCRIPT URL ═══
+const APPS_SCRIPT_URL= "https://script.google.com/macros/s/AKfycbxRcY80TpPHmoPDhGy9dUHqswxjncU3uB91n9UDU8SfEE6yYyWtCa0UEyVO315e5vQqaQ/exec";
+
+/* ═══════════════════════════════════════════
+   HELPERS
+   ═══════════════════════════════════════════ */
+const pd=s=>{const[y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const fd=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+const fDisp=d=>d.toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+const addD=(d,n)=>{const r=new Date(d);r.setDate(r.getDate()+n);return r};
+const same=(a,b)=>a&&b&&fd(a)===fd(b);
+const diffD=(a,b)=>Math.round((b-a)/864e5);
+const inRange=(date,s,e)=>date>=pd(s)&&date<=pd(e);
+const getHigh=date=>HIGH_SEASON.find(r=>inRange(date,r.start,r.end))||null;
+const isBooked=date=>BOOKED.some(r=>inRange(date,r.start,r.end));
+const hasBooked=(s,e)=>{let d=new Date(s);while(d<=e){if(isBooked(d))return true;d=addD(d,1)}return false};
+const getSeason=(ci,co)=>{let d=new Date(ci),h=0,l=0;while(d<co){getHigh(d)?h++:l++;d=addD(d,1)}return h>=l?"high":"low"};
+const calDays=(y,m)=>{const f=new Date(y,m,1),last=new Date(y,m+1,0).getDate();let dow=f.getDay();if(dow===0)dow=7;const days=[];for(let i=1;i<dow;i++)days.push(null);for(let d=1;d<=last;d++)days.push(new Date(y,m,d));return days};
+const fmt$=n=>"$"+n.toLocaleString();
+
+/* ═══════════════════════════════════════════
+   STATE
+   ═══════════════════════════════════════════ */
+const state={
+  vY:new Date().getFullYear(),vM:new Date().getMonth(),
+  ci:null,co:null,sel:"in",guests:1,step:0,
+  name:"",email:"",phone:"",notes:"",
+  err:"",expSel:{},sending:false
+};
+const todayC=new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate());
+
+function getNights(){return state.ci&&state.co?diffD(state.ci,state.co):0}
+function getSeas(){return state.ci&&state.co?getSeason(state.ci,state.co):null}
+function getRate(){return getSeas()==="high"?RATE_H:RATE_L}
+function getNightBreakdown(){
+  if(!state.ci||!state.co)return{high:0,low:0};
+  let h=0,l=0,d=new Date(state.ci);
+  while(d<state.co){getHigh(d)?h++:l++;d=addD(d,1)}
+  return{high:h,low:l};
+}
+function getRentalTotal(){
+  const b=getNightBreakdown();
+  return b.high*RATE_H+b.low*RATE_L;
+}
+function getExpTotal(){let t=0;EXP_CATEGORIES.forEach(c=>c.items.forEach(i=>{if(state.expSel[i.id])t+=i.price*(i.qty?(state.expSel[i.id]||1):1)}));return t}
+function getGrandTotal(){return getRentalTotal()+getExpTotal()}
+
+/* ═══════════════════════════════════════════
+   RENDER
+   ═══════════════════════════════════════════ */
+function render(){
+  const app=document.getElementById("app");
+  const s=state;
+
+  // Confirmation
+  if(s.step===3){
+    const hi=s.ci?getHigh(s.ci):null;
+    let expHtml="";
+    if(Object.keys(s.expSel).length>0){
+      expHtml=`<div class="sum-box"><div class="sum-label">SELECTED EXPERIENCES</div>`;
+      EXP_CATEGORIES.flatMap(c=>c.items).filter(i=>s.expSel[i.id]).forEach(i=>{
+        const q=i.qty?s.expSel[i.id]:1;
+        expHtml+=`<div class="sum-row"><span class="sum-k">${i.name}${q>1?" ×"+q:""}</span><span class="sum-v">${fmt$(i.price*q)} USD</span></div>`;
+      });
+      expHtml+=`</div>`;
+    }
+    app.innerHTML=`
+      <div class="confirm-icon">✓</div>
+      <h2 class="confirm-title">Inquiry Received</h2>
+      <p class="confirm-sub">Thank you, ${s.name}. We'll get back to you within 24 hours via WhatsApp or email.</p>
+      <div class="sum-box">
+        <div class="sum-label">RESERVATION SUMMARY</div>
+        <div class="sum-row"><span class="sum-k">Dates</span><span class="sum-v">${fDisp(s.ci)} — ${fDisp(s.co)}</span></div>
+        <div class="sum-row"><span class="sum-k">Nights</span><span class="sum-v">${getNights()}</span></div>
+        <div class="sum-row"><span class="sum-k">Guests</span><span class="sum-v">${s.guests}</span></div>
+        <div class="sum-row"><span class="sum-k">Season</span><span class="sum-v">${getSeas()==="high"?"High Season"+(hi?" — "+hi.label:""):"Low Season"}</span></div>
+        <div class="sum-row"><span class="sum-k">Accommodation</span><span class="sum-v">${fmt$(getRentalTotal())} USD</span></div>
+        ${getExpTotal()>0?`<div class="sum-row"><span class="sum-k">Experiences</span><span class="sum-v">${fmt$(getExpTotal())} USD</span></div>`:""}
+        <div class="sum-row sum-total"><span class="sum-k">Estimated Total</span><span class="sum-v">${fmt$(getGrandTotal())} USD</span></div>
+      </div>
+      ${expHtml}
+      <button class="btn-secondary" onclick="resetAll()">Make Another Inquiry</button>
+    `;
+    return;
+  }
+
+  // Steps indicator
+  const stepsHtml=["Dates","Experiences","Contact"].map((t,i)=>`
+    <div class="step ${s.step<i?"dim":""}">
+      <div class="dot ${s.step===i?"active":s.step>i?"done":""}">${s.step>i?"✓":i+1}</div>
+      <span class="step-text ${s.step===i?"bold":""}">${t}</span>
+    </div>
+  `).join("");
+
+  let content="";
+
+  // ═══ STEP 0: DATES ═══
+  if(s.step===0){
+    const days=calDays(s.vY,s.vM);
+    const hi=s.ci?getHigh(s.ci):null;
+    let daysHtml=DY.map(d=>`<div class="cal-dh">${d}</div>`).join("");
+    days.forEach((date,i)=>{
+      if(!date){daysHtml+=`<div class="cal-day past"></div>`;return}
+      const booked=isBooked(date),past=date<todayC,high=getHigh(date);
+      const inSel=s.ci&&(s.co?(date>=s.ci&&date<=s.co):same(date,s.ci));
+      const isCi=same(date,s.ci),isCo=same(date,s.co);
+      let cls="cal-day";
+      if(past)cls+=" past";
+      else if(booked)cls+=" booked";
+      else if(isCi||isCo)cls+=" endpoint";
+      else if(inSel)cls+=" selected";
+      else if(high)cls+=" high";
+      const dot=high&&!booked&&!past&&!inSel&&!isCi&&!isCo?`<div class="high-dot"></div>`:"";
+      const onclick=!past&&!booked?`onclick="handleDay(${date.getTime()})"`:"";
+      daysHtml+=`<div class="${cls}" ${onclick}>${date.getDate()}${dot}</div>`;
+    });
+
+    let priceHtml="";
+    if(s.ci){
+      priceHtml=`<div class="price-box">
+        <div class="price-row"><span class="price-k">Check-in</span><span class="price-v">${fDisp(s.ci)}</span></div>`;
+      if(s.co){
+        const b=getNightBreakdown();
+        const mixed=b.high>0&&b.low>0;
+        let breakdownHtml="";
+        if(mixed){
+          breakdownHtml+=`<div class="price-row"><span class="price-k">${b.high} night${b.high>1?"s":""} × ${fmt$(RATE_H)} <span style="font-size:10px;color:#E8863A;letter-spacing:1px">HIGH</span></span><span class="price-v">${fmt$(b.high*RATE_H)} USD</span></div>`;
+          breakdownHtml+=`<div class="price-row"><span class="price-k">${b.low} night${b.low>1?"s":""} × ${fmt$(RATE_L)} <span style="font-size:10px;color:#999;letter-spacing:1px">LOW</span></span><span class="price-v">${fmt$(b.low*RATE_L)} USD</span></div>`;
+        }else{
+          breakdownHtml=`<div class="price-row"><span class="price-k">${getNights()} nights × ${fmt$(b.high>0?RATE_H:RATE_L)}</span><span class="price-v">${fmt$(getRentalTotal())} USD</span></div>`;
+        }
+        priceHtml+=`<div class="price-row"><span class="price-k">Check-out</span><span class="price-v">${fDisp(s.co)}</span></div>
+        ${breakdownHtml}
+        <div class="price-row" style="border-top:1px solid #eee;margin-top:4px;padding-top:8px"><span class="price-k">${getNights()} nights total</span><span class="price-v total">${fmt$(getRentalTotal())} USD</span></div>
+        <div class="season-tag">${mixed?"Mixed Season":b.high>0?"High Season"+(hi?" — "+hi.label:""):"Low Season"}</div>`;
+      }else{priceHtml+=`<div class="hint">Select check-out date</div>`}
+      priceHtml+=`</div>`;
+    }
+
+    content=`
+      <div class="cal-box">
+        <div class="cal-nav">
+          <button class="cal-arr" onclick="prevMonth()">‹</button>
+          <span class="cal-month">${MO[s.vM]} ${s.vY}</span>
+          <button class="cal-arr" onclick="nextMonth()">›</button>
+        </div>
+        <div class="legend">
+          <span class="leg-item"><span class="leg-dot" style="background:#4a8c3f"></span>Available</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#c25050"></span>Booked</span>
+          <span class="leg-item"><span class="leg-dot" style="background:#E8863A"></span>High Season</span>
+        </div>
+        <div class="cal-grid">${daysHtml}</div>
+        <div class="cal-foot">
+          <div style="text-align:center"><span class="season-badge">HIGH SEASON — 7 NIGHT MINIMUM</span><br><span class="season-list">Chinese New Year · Holy & Easter Week · Ondalinda · Christmas & New Year's</span></div>
+          <div style="text-align:center"><span class="season-badge low">LOW SEASON — 3 NIGHT MINIMUM</span><br><span class="season-list">All other dates</span></div>
+          <div style="text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid #eee">
+            <span style="font-size:10px;font-weight:700;letter-spacing:2px;color:#1a1a2e;display:block;margin-bottom:4px;text-transform:uppercase">Cancellation Policy</span>
+            <span style="font-size:11px;color:#aaa;display:block">High Season* — Full refund if cancelled &gt;60 days before arrival</span>
+            <span style="font-size:11px;color:#aaa;display:block">Low Season — Full refund if cancelled &gt;30 days before arrival</span>
+            <span style="font-size:11px;color:#aaa;display:block;margin-top:4px">No refund within cancellation window</span>
+            <span style="font-size:10px;color:#bbb;display:block;margin-top:6px;font-style:italic">* High Season: Chinese New Year, Holy &amp; Easter weeks, Ondalinda Festival, Christmas &amp; New Year's</span>
+          </div>
+        </div>
+      </div>
+      ${priceHtml}
+      ${s.err?`<div class="error">${s.err}</div>`:""}
+      <div class="field"><label class="label">Guests</label>
+        <select onchange="state.guests=Number(this.value);render()">${[...Array(12)].map((_,i)=>`<option value="${i+1}" ${s.guests===i+1?"selected":""}>${i+1}</option>`).join("")}</select>
+      </div>
+    `;
+  }
+
+  // ═══ STEP 1: EXPERIENCES ═══
+  if(s.step===1){
+    let catsHtml="";
+    EXP_CATEGORIES.forEach(cat=>{
+      let itemsHtml="";
+      cat.items.forEach(item=>{
+        const active=!!s.expSel[item.id];
+        const q=s.expSel[item.id]||1;
+        let qtyHtml="";
+        if(active&&item.qty){
+          qtyHtml=`<div class="qty-row">
+            <button class="qty-btn" onclick="event.stopPropagation();setExpQty('${item.id}',${q-1})">−</button>
+            <span class="qty-val">${q}</span>
+            <button class="qty-btn" onclick="event.stopPropagation();setExpQty('${item.id}',${q+1})">+</button>
+            <span class="qty-total">${fmt$(item.price*q)} USD</span>
+          </div>`;
+        }
+        itemsHtml+=`<div class="exp-row ${active?"active":""}" onclick="toggleExp('${item.id}')">
+          <div class="exp-check">
+            <div class="checkbox ${active?"on":""}">${active?"✓":""}</div>
+            <div class="exp-info"><div class="exp-name">${item.name}</div><div class="exp-desc">${item.desc}</div></div>
+            <div class="exp-price">${fmt$(item.price)} USD${item.unit||""}</div>
+          </div>
+          ${qtyHtml}
+        </div>`;
+      });
+      catsHtml+=`<div class="exp-cat-title">${cat.category.toUpperCase()}</div>${itemsHtml}`;
+    });
+    const etotal=getExpTotal();
+    content=`
+      <h2 class="exp-h2">Enhance Your Stay</h2>
+      <p class="exp-sub">Select any experiences you'd like to add. All services available by reservation. Non-refundable once booked. A 15% gratuity is recommended.</p>
+      ${catsHtml}
+      ${etotal>0?`<div class="exp-total-bar"><span>Experiences subtotal</span><span>${fmt$(etotal)} USD</span></div>`:""}
+    `;
+  }
+
+  if(s.step===2){
+    const hi=s.ci?getHigh(s.ci):null;
+    const b=getNightBreakdown();
+    const mixed=b.high>0&&b.low>0;
+    let accomLine="";
+    if(mixed){
+      accomLine=`<div class="sum-row"><span class="sum-k">${b.high} nights High Season × ${fmt$(RATE_H)}</span><span class="sum-v">${fmt$(b.high*RATE_H)}</span></div>
+      <div class="sum-row"><span class="sum-k">${b.low} nights Low Season × ${fmt$(RATE_L)}</span><span class="sum-v">${fmt$(b.low*RATE_L)}</span></div>`;
+    }else{
+      accomLine=`<div class="sum-row"><span class="sum-k">Accommodation (${b.high>0?"High":"Low"} Season)</span><span class="sum-v">${fmt$(getRentalTotal())}</span></div>`;
+    }
+    content=`
+      <h2 class="exp-h2">Contact Information</h2>
+      <p class="exp-sub">We'll confirm your reservation within 24 hours.</p>
+      <div class="field"><label class="label">Full name *</label><input value="${s.name}" oninput="state.name=this.value" placeholder="Name"></div>
+      <div class="field"><label class="label">Email address *</label><input value="${s.email}" oninput="state.email=this.value" placeholder="Email" type="email"></div>
+      <div class="field"><label class="label">Phone / WhatsApp *</label><input value="${s.phone}" oninput="state.phone=this.value" placeholder="Telephone"></div>
+      <div class="field"><label class="label">Special requests or notes</label><textarea oninput="state.notes=this.value" placeholder="Dietary needs, celebrations, special requests...">${s.notes}</textarea></div>
+      <div class="sum-box">
+        <div class="sum-label">YOUR INQUIRY SUMMARY</div>
+        <div class="sum-row"><span class="sum-k">${fDisp(s.ci)} — ${fDisp(s.co)}</span><span class="sum-v">${getNights()} nights · ${s.guests} guest${s.guests>1?"s":""}</span></div>
+        ${accomLine}
+        ${getExpTotal()>0?`<div class="sum-row"><span class="sum-k">Experiences & Services</span><span class="sum-v">${fmt$(getExpTotal())}</span></div>`:""}
+        <div class="sum-row sum-total"><span class="sum-k">Estimated Total</span><span class="sum-v">${fmt$(getGrandTotal())} USD</span></div>
+      </div>
+      ${s.err?`<div class="error">${s.err}</div>`:""}
+    `;
+  }
+
+  // Navigation
+  let navHtml=`<div class="nav-row">`;
+  if(s.step>0&&s.step<3)navHtml+=`<button class="btn-secondary" onclick="goBack()">← Back</button>`;
+  navHtml+=`<div class="spacer"></div>`;
+  if(s.step===0){
+    const can=s.ci&&s.co;
+    navHtml+=`<button class="btn-primary ${can?"":"dim"}" onclick="goNext()">Continue to Experiences →</button>`;
+  }else if(s.step===1){
+    navHtml+=`<button class="btn-primary" onclick="goNext()">Continue to Contact →</button>`;
+  }else if(s.step===2){
+    const can=s.name.trim()&&s.email.trim()&&s.phone.trim();
+    navHtml+=`<button class="btn-primary ${can&&!s.sending?"":"dim"}" onclick="submitInquiry()">${s.sending?"Sending...":"Send Inquiry"}</button>`;
+  }
+  navHtml+=`</div>`;
+
+  app.innerHTML=`
+    <h1>Reserve <span>Casa Papelillo</span></h1>
+    <p class="sub">Tell us about your stay and we will get back to you within 24 hours.</p>
+    <p class="note">We will reply via WhatsApp or email · +1 (917) 363 7913</p>
+    <div class="steps">${stepsHtml}</div>
+    ${content}
+    ${navHtml}
+  `;
+}
+
+/* ═══════════════════════════════════════════
+   EVENT HANDLERS
+   ═══════════════════════════════════════════ */
+function prevMonth(){if(state.vM===0){state.vM=11;state.vY--}else state.vM--;render()}
+function nextMonth(){if(state.vM===11){state.vM=0;state.vY++}else state.vM++;render()}
+
+function handleDay(ts){
+  const date=new Date(ts);
+  if(isBooked(date)||date<todayC)return;
+  state.err="";
+  if(state.sel==="in"||(state.ci&&state.co)){
+    state.ci=date;state.co=null;state.sel="out";
+  }else{
+    if(date<=state.ci){state.ci=date;state.co=null;render();return}
+    if(hasBooked(state.ci,date)){state.err="Selected dates overlap with an existing reservation.";render();return}
+    const n=diffD(state.ci,date),s=getSeason(state.ci,date),min=s==="high"?MIN_H:MIN_L;
+    if(n<min){state.err=`Minimum stay is ${min} nights during ${s} season.`;render();return}
+    state.co=date;state.sel="in";
+  }
+  render();
+}
+
+function toggleExp(id){
+  const item=EXP_CATEGORIES.flatMap(c=>c.items).find(i=>i.id===id);
+  // Block "additional participant" items if their parent isn't selected
+  if(item&&item.requiresParent&&!state.expSel[item.requiresParent]){
+    state.err=`Please add the base session first before adding extra participants.`;
+    render();return;
+  }
+  state.err="";
+  if(state.expSel[id])delete state.expSel[id];else state.expSel[id]=1;
+  // If un-selecting a parent, also remove its dependent extra
+  if(!state.expSel[id]){
+    EXP_CATEGORIES.flatMap(c=>c.items).forEach(i=>{if(i.requiresParent===id)delete state.expSel[i.id]});
+  }
+  render();
+}
+function setExpQty(id,qty){
+  state.expSel[id]=Math.max(1,qty);render();
+}
+
+function goBack(){state.step--;state.err="";render()}
+function goNext(){
+  if(state.step===0&&!(state.ci&&state.co)){state.err="Please select check-in and check-out dates.";render();return}
+  state.step++;state.err="";render();
+}
+
+async function submitInquiry(){
+  if(!state.name.trim()||!state.email.trim()||!state.phone.trim()){state.err="Please fill in all required fields.";render();return}
+  if(state.sending)return;
+  state.sending=true;state.err="";render();
+
+  const payload={
+    checkIn:fd(state.ci),checkOut:fd(state.co),nights:getNights(),guests:state.guests,
+    season:getSeas(),rate:getRate(),rentalTotal:getRentalTotal(),
+    experiences:Object.entries(state.expSel).map(([id,qty])=>{
+      const item=EXP_CATEGORIES.flatMap(c=>c.items).find(i=>i.id===id);
+      return{id,name:item?.name,qty,unitPrice:item?.price,total:(item?.price||0)*qty};
+    }),
+    expTotal:getExpTotal(),grandTotal:getGrandTotal(),
+    name:state.name,email:state.email,phone:state.phone,notes:state.notes
+  };
+
+  try{
+    if(APPS_SCRIPT_URL!=="YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"){
+      await fetch(APPS_SCRIPT_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(payload)});
+    }else{
+      console.log("BOOKING_PAYLOAD:",JSON.stringify(payload,null,2));
+    }
+    state.step=3;
+  }catch(e){
+    console.log("BOOKING_PAYLOAD:",JSON.stringify(payload,null,2));
+    state.step=3;
+  }
+  state.sending=false;
+  render();
+  // Report height to parent iframe
+  window.parent.postMessage({type:"resize",height:document.body.scrollHeight},"*");
+}
+
+function resetAll(){
+  state.ci=null;state.co=null;state.sel="in";state.guests=1;state.step=0;
+  state.name="";state.email="";state.phone="";state.notes="";state.err="";state.expSel={};state.sending=false;
+  render();
+}
+
+/* ═══════════════════════════════════════════
+   INITIALIZATION & SAFE RESIZE OBSERVER
+   ═══════════════════════════════════════════ */
+document.addEventListener("DOMContentLoaded", () => {
+  // 1. Initial render only after the DOM is fully ready
+  render();
+
+  // 2. Feature detection and safe initialization for ResizeObserver
+  if (typeof ResizeObserver !== 'undefined') {
+    try {
+      const observer = new ResizeObserver(() => {
+        window.parent.postMessage({ type: "resize", height: document.body.scrollHeight }, "*");
+      });
+      observer.observe(document.body);
+    } catch (error) {
+      console.warn("ResizeObserver initialization failed:", error);
+    }
+  } else {
+    // Fallback for older browsers or strict webviews
+    console.warn("ResizeObserver not supported in this environment. Using fallback.");
+    setTimeout(() => {
+      window.parent.postMessage({ type: "resize", height: document.body.scrollHeight }, "*");
+    }, 800);
+  }
+});
+</script>
+</body>
+</html>
