@@ -294,14 +294,14 @@ window.pay=function(){
   var b=getNB();
   var transportData=[];
   TRANSPORT.forEach(function(i){
-    if(S.tr[i.id])transportData.push({id:i.id,name:i.nm,desc:i.ds,price:i.pr,qty:S.tr[i.id]||1});
+    if(S.tr[i.id])transportData.push({id:i.id,name:i.nm,desc:i.ds,price:Math.round(i.pr),qty:Math.round(S.tr[i.id]||1)});
   });
 
   var payload={
     action:"create_checkout",
-    checkIn:fd(S.ci),checkOut:fd(S.co),nights:nts(),guests:S.guests,
-    nightBreakdown:{high:b.high,low:b.low},rateHigh:RATE_H,rateLow:RATE_L,
-    rentalTotal:rTot(),transport:transportData,transportTotal:tTot(),grandTotal:gTot(),
+    checkIn:fd(S.ci),checkOut:fd(S.co),nights:Math.round(nts()),guests:Math.round(S.guests),,
+    nightBreakdown:{high:Math.round(b.high),low:Math.round(b.low)},rateHigh:Math.round(RATE_H),rateLow:Math.round(RATE_L),    
+    rentalTotal:Math.round(rTot()),transport:transportData,transportTotal:Math.round(tTot()),grandTotal:Math.round(gTot()),
     name:S.name,email:S.email,phone:S.phone,notes:S.notes
   };
 
