@@ -291,21 +291,27 @@ window.pay=function(){
   if(S.sending)return;
   S.sending=true;S.err="";R();
 
-  var b=getNB();
   var transportData=[];
   TRANSPORT.forEach(function(i){
-    if(S.tr[i.id])transportData.push({id:i.id,name:i.nm,desc:i.ds,price:Math.round(i.pr),qty:Math.round(S.tr[i.id]||1)});
+    if(S.tr[i.id])transportData.push({id:i.id,name:i.nm,desc:i.ds,price:String(i.pr),qty:String(S.tr[i.id]||1)});
   });
 
+  var b=getNB();
   var payload={
     action:"create_checkout",
-    checkIn:fd(S.ci),checkOut:fd(S.co),nights:Math.round(nts()),guests:Math.round(S.guests),
-    nightBreakdown:{high:Math.round(b.high),low:Math.round(b.low)},rateHigh:Math.round(RATE_H),rateLow:Math.round(RATE_L),    
-    rentalTotal:Math.round(rTot()),transport:transportData,transportTotal:Math.round(tTot()),grandTotal:Math.round(gTot()),
-    name:S.name,email:S.email,phone:S.phone,notes:S.notes
+    checkIn:fd(S.ci),
+    checkOut:fd(S.co),
+    nights:String(nts()),
+    guests:String(S.guests),
+    highNights:String(b.high),
+    lowNights:String(b.low),
+    transport:transportData,
+    name:S.name,
+    email:S.email,
+    phone:S.phone,
+    notes:S.notes
   };
 
-  payload=JSON.parse(JSON.stringify(payload,function(k,v){return typeof v==="number"?parseInt(v):v}));  
   fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(payload)})
   .then(function(r){return r.json()})
   .then(function(data){
@@ -319,7 +325,6 @@ window.pay=function(){
     S.err="Connection error. Please try again.";S.sending=false;R();
   });
 };
-
 window.resetAll=function(){S.ci=null;S.co=null;S.sel="in";S.guests=1;S.step=0;S.name="";S.email="";S.phone="";S.notes="";S.err="";S.tr={};S.sending=false;R()};
 
 R();
