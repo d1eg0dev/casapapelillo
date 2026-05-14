@@ -305,6 +305,7 @@ window.pay=function(){
     name:S.name,email:S.email,phone:S.phone,notes:S.notes
   };
 
+  payload=JSON.parse(JSON.stringify(payload).replace(/":(\d+)\.0([,}])/g, '":$1$2'));
   fetch(API_URL,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify(payload)})
   .then(function(r){return r.json()})
   .then(function(data){
