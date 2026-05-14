@@ -299,7 +299,7 @@ window.pay=function(){
 
   var payload={
     action:"create_checkout",
-    checkIn:fd(S.ci),checkOut:fd(S.co),nights:Math.round(nts()),guests:Math.round(S.guests),,
+    checkIn:fd(S.ci),checkOut:fd(S.co),nights:Math.round(nts()),guests:Math.round(S.guests),
     nightBreakdown:{high:Math.round(b.high),low:Math.round(b.low)},rateHigh:Math.round(RATE_H),rateLow:Math.round(RATE_L),    
     rentalTotal:Math.round(rTot()),transport:transportData,transportTotal:Math.round(tTot()),grandTotal:Math.round(gTot()),
     name:S.name,email:S.email,phone:S.phone,notes:S.notes
