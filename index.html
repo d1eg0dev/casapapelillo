@@ -100,7 +100,7 @@ var HIGH_SEASON=[
   {start:"2027-11-10",end:"2027-11-18",label:"Ondalinda Festival"},
   {start:"2027-12-20",end:"2028-01-05",label:"Christmas & New Year's"}
 ];
-var BOOKED=[{start:"2026-04-15",end:"2026-04-19"}];
+var BOOKED=[];
 var RATE_H=3200,RATE_L=1400,MIN_H=7,MIN_L=3;
 var MO=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var DY=["Mo","Tu","We","Th","Fr","Sa","Su"];
@@ -327,7 +327,11 @@ window.pay=function(){
 };
 window.resetAll=function(){S.ci=null;S.co=null;S.sel="in";S.guests=1;S.step=0;S.name="";S.email="";S.phone="";S.notes="";S.err="";S.tr={};S.sending=false;R()};
 
-R();
+window.resetAll=function(){S.ci=null;S.co=null;S.sel="in";S.guests=1;S.step=0;S.name="";S.email="";S.phone="";S.notes="";S.err="";S.tr={};S.sending=false;R()};
+fetch(API_URL+"?action=blocked_dates")
+.then(function(r){return r.json()})
+.then(function(dates){BOOKED=dates;R();})
+.catch(function(){R();});
 
 if(typeof ResizeObserver!=="undefined"){try{new ResizeObserver(function(){window.parent.postMessage({type:"resize",height:document.body.scrollHeight},"*")}).observe(document.body)}catch(e){}}
 
