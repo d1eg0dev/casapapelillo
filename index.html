@@ -101,7 +101,10 @@ var HIGH_SEASON=[
   {start:"2027-12-20",end:"2028-01-05",label:"Christmas & New Year's"}
 ];
 var BOOKED=[];
-var RATE_H=3200,RATE_L=1400,MIN_H=7,MIN_L=3;
+const RATE_H = 3000;
+const RATE_L = 1200;
+const MIN_H = 5;
+const MIN_L = 1;
 var MO=["January","February","March","April","May","June","July","August","September","October","November","December"];
 var DY=["Mo","Tu","We","Th","Fr","Sa","Su"];
 
@@ -188,8 +191,8 @@ function R(){
     html+='<div class="cal-box"><div class="cal-nav"><button class="cal-arr" onclick="pM()">‹</button><span class="cal-month">'+MO[S.vM]+' '+S.vY+'</span><button class="cal-arr" onclick="nM()">›</button></div>'
       +'<div class="legend"><span class="leg"><span class="legd" style="background:#4a8c3f"></span>Available</span><span class="leg"><span class="legd" style="background:#c25050"></span>Booked</span><span class="leg"><span class="legd" style="background:#E8863A"></span>High Season</span></div>'
       +'<div class="cg">'+dH+'</div>'
-      +'<div class="cfoot"><div style="text-align:center"><span class="sb">HIGH SEASON — 7 NIGHT MINIMUM</span><br><span class="sl2">Chinese New Year · Holy & Easter Week · Ondalinda · Christmas & New Year\'s</span></div>'
-      +'<div style="text-align:center;margin-top:6px"><span class="sb lo">LOW SEASON — 3 NIGHT MINIMUM</span><br><span class="sl2">All other dates</span></div>'
+      +'<div class="cfoot"><div style="text-align:center"><span class="sb">HIGH SEASON — 5 NIGHT MINIMUM</span><br><span class="sl2">Chinese New Year · Holy & Easter Week · Ondalinda · Christmas & New Year\'s</span></div>'
+      +'<div style="text-align:center;margin-top:6px"><span class="sb lo">LOW SEASON — 1 NIGHT MINIMUM</span><br><span class="sl2">All other dates</span></div>'
       +'<div style="text-align:center;margin-top:8px;padding-top:8px;border-top:1px solid #eee"><span style="font-size:10px;font-weight:700;letter-spacing:2px;color:#1a1a2e;text-transform:uppercase">Cancellation Policy</span><br>'
       +'<span style="font-size:11px;color:#aaa">High Season — Full refund if cancelled &gt;60 days before arrival</span><br>'
       +'<span style="font-size:11px;color:#aaa">Low Season — Full refund if cancelled &gt;30 days before arrival</span><br>'
